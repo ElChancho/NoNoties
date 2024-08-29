@@ -1,12 +1,15 @@
+import { useNote } from '../hooks/useNote'
 import './Card.css'
 
-export function Card ({ children }) {
+export function Card ({ note, onChange }) {
+  const { deleteNote } = useNote()
+
   return (
     <div className='card'>
       <div className='card-options'>
-        <input type='text' />
+        <button onClick={() => deleteNote(note.id)}>Delete</button>
       </div>
-      <textarea>{children}</textarea>
+      <textarea value={note} onChange={onChange} />
     </div>
   )
 }

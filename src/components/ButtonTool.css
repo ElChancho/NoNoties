@@ -1,0 +1,15 @@
+.button-toolbar {
+  border: 0;
+  /* border-radius: 10px; */
+  min-width: 70px;
+  width: 80px;
+  max-width: 100px;
+  text-align: center;
+  background-color: rgb(237, 237, 237);
+  transition: 0.3s ease;
+}
+
+.button-toolbar:hover {
+  cursor: pointer;
+  background-color: rgb(219, 219, 219);
+}

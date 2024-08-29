@@ -1,39 +1,34 @@
 import './App.css'
+import { Header } from './components/Header.jsx'
+import { ButtonTool } from './components/ButtonTool.jsx'
 import { Card } from './components/Card.jsx'
-import { useState } from 'react'
+import { useNote } from './hooks/useNote.js'
 
 export function App () {
-  const [notes, setNotes] = useState([])
-
-  function addNote () {
-    const newNotes = [...notes]
-    newNotes.push(Card)
-    setNotes(newNotes)
-  }
-
+  const { notes, addNote } = useNote()
+  // update note above
   return (
     <>
-      <header>
-        <h1>NoNoties</h1>
-      </header>
-
+      <Header />
       <main>
         <div className='toolbar'>
-          <button onClick={addNote}>Add Note</button>
+          <ButtonTool onClick={addNote}>Add Note</ButtonTool>
+          {/* <button className='button-toolbar' onClick={addNote}>Add Note</button> */}
         </div>
 
         {
-          notes.map((note, index) => {
+          notes.map((note) => {
             return (
               <Card
-                key={index}
-              >
-                {note}
-              </Card>
+                key={note.id}
+                value={note}
+                // onChange={updateNote}
+              />
             )
           })
         }
 
+        {/* <Card key={100} note='prueba' onChange={(e) => updateNote({ index: 100, note: e.target.value })} /> */}
       </main>
     </>
 

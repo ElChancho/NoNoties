@@ -1,0 +1,10 @@
+header {
+  height: 60px;
+  min-height: 50px;
+  max-height: 60px;
+  width: 100%;
+  background-color: var(--bg2-color);
+  display: flex;
+  justify-content: space-around;
+  /* border-bottom: 1px solid black; */
+}
