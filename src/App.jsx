@@ -5,7 +5,7 @@ import { Card } from './components/Card.jsx'
 import { useNote } from './hooks/useNote.js'
 
 export function App () {
-  const { notes, addNote } = useNote()
+  const { notes, addNote, deleteNote } = useNote()
   // update note above
   return (
     <>
@@ -13,7 +13,6 @@ export function App () {
       <main>
         <div className='toolbar'>
           <ButtonTool onClick={addNote}>Add Note</ButtonTool>
-          {/* <button className='button-toolbar' onClick={addNote}>Add Note</button> */}
         </div>
 
         {
@@ -21,7 +20,9 @@ export function App () {
             return (
               <Card
                 key={note.id}
+                id={note.id}
                 value={note}
+                deleteNote={deleteNote}
                 // onChange={updateNote}
               />
             )

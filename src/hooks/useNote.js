@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Card } from '../components/Card'
 
 export function useNote () {
   const [notes, setNotes] = useState([])
@@ -13,8 +12,7 @@ export function useNote () {
 
   const deleteNote = (id) => {
     const auxNotes = [...notes]
-    const deletedNotes = auxNotes.filter((note) => note !== id)
-    console.log(deletedNotes)
+    const deletedNotes = auxNotes.filter((note) => note.id !== id)
     setNotes(deletedNotes)
   }
 
