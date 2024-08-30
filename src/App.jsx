@@ -1,6 +1,6 @@
 import './App.css'
 import { Header } from './components/Header.jsx'
-import { ButtonTool } from './components/ButtonTool.jsx'
+import { ToolBar } from './components/ToolBar.jsx'
 import { Card } from './components/Card.jsx'
 import { useNote } from './hooks/useNote.js'
 
@@ -11,9 +11,7 @@ export function App () {
     <>
       <Header />
       <main>
-        <div className='toolbar'>
-          <ButtonTool onClick={addNote}>Add Note</ButtonTool>
-        </div>
+        <ToolBar addNote={addNote} />
 
         {
           notes.map((note) => {

@@ -1,0 +1,8 @@
+.toolbar {
+  width: 100%;
+  height: 35px;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid black;
+  /* background-color: blanchedalmond; */
+}
