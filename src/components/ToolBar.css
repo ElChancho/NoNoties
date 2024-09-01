@@ -1,8 +1,14 @@
+:root {
+  --margin-left: 20px;
+  --margin-right: 20px;
+}
+
 .toolbar {
-  width: 100%;
+  width: calc(100% - var(--margin-left) - var(--margin-right));
   height: 35px;
   display: flex;
   justify-content: space-between;
   border: 1px solid black;
-  /* background-color: blanchedalmond; */
+  margin-left: var(--margin-left);
+  margin-right: var(--margin-right);
 }

@@ -18,11 +18,17 @@ html {
 
 main {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 15px;
 }
 
 
-
+.section-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
 
 
