@@ -1,11 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export function useNote () {
-  const [notes, setNotes] = useState([])
+  const [notes, setNotes] = useState(() => {
+    const savedNotes = window.localStorage.getItem('notes')
+    if (savedNotes) return JSON.parse(savedNotes)
+    return []
+  })
+
+  useEffect(() => {
+    window.localStorage.setItem('notes', JSON.stringify(notes))
+  }, [notes])
 
   const addNote = () => {
     const newNotes = [...notes]
-    const newNote = { id: Date.now() }
+    const newNote = { id: Date.now(), content: '' }
     newNotes.push(newNote)
     setNotes(newNotes)
   }
@@ -16,11 +24,16 @@ export function useNote () {
     setNotes(deletedNotes)
   }
 
-  // const updateNote = ({ index, note }) => {
-  //   const updatedNotes = [...notes]
-  //   updatedNotes[index] = note
-  //   setNotes(updatedNotes)
-  // }
+  const updateNote = ({ id, content }) => {
+    const auxNotes = [...notes]
+    const updatedNoteId = auxNotes.findIndex((auxNote) => auxNote.id === id)
 
-  return { notes, addNote, deleteNote }
+    if (updatedNoteId !== -1) {
+      const newNote = { ...auxNotes[updatedNoteId], content }
+      auxNotes[updatedNoteId] = newNote
+      setNotes(auxNotes)
+    }
+  }
+
+  return { notes, addNote, deleteNote, updateNote }
 }

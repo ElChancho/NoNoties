@@ -2,11 +2,16 @@ import { useState } from 'react'
 import IconMoreVert from '../img/more_vert.svg'
 import './Card.css'
 
-export function Card ({ note, id, onChange, deleteNote }) {
+export function Card ({ content, id, updateNote, deleteNote }) {
   const [dropDown, setDropDown] = useState(false)
 
   const dropDownClick = () => {
     setDropDown(!dropDown)
+  }
+
+  const handleNoteChange = (event) => {
+    const newNoteValue = event.target.value
+    updateNote({ id, content: newNoteValue })
   }
 
   return (
@@ -25,7 +30,7 @@ export function Card ({ note, id, onChange, deleteNote }) {
         </div>
 
       </div>
-      <textarea value={note} onChange={onChange} />
+      <textarea value={content} onChange={handleNoteChange} />
     </div>
   )
 }
