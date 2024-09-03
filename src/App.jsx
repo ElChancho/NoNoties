@@ -20,6 +20,7 @@ export function App () {
                   key={note.id}
                   id={note.id}
                   content={note.content}
+                  star={note.star}
                   deleteNote={deleteNote}
                   updateNote={updateNote}
                 />
