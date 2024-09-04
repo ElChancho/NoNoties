@@ -13,7 +13,7 @@ export function useNote () {
 
   const addNote = () => {
     const newNotes = [...notes]
-    const newNote = { id: Date.now(), content: '', star: false }
+    const newNote = { id: Date.now(), content: '', star: false, tag: { name: undefined, color: undefined } }
     newNotes.push(newNote)
     setNotes(newNotes)
   }

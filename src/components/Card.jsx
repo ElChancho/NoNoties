@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import IconMoreVert from '../img/more_vert.svg'
 import './Card.css'
+import { useTag } from '../hooks/useTag'
 
-export function Card ({ id, content, star, updateNote, deleteNote }) {
+export function Card ({ id, content, star, tag, updateNote, deleteNote }) {
   const [dropDown, setDropDown] = useState(false)
+  const { tags, addTag } = useTag()
 
   const dropDownClick = () => {
     setDropDown(!dropDown)
@@ -17,13 +19,12 @@ export function Card ({ id, content, star, updateNote, deleteNote }) {
   const handleStarChange = () => {
     const changeStar = !star
     updateNote({ id, content, star: changeStar })
-    // sortFav({ id })
   }
 
   return (
-    <div className='card'>
+    <div className='card' style={tag.color && { borderColor: tag.color }}>
+      {tag.name && <p className='tag-header' style={{ backgroundColor: tag.color }}>{tag.name}</p>}
       <div className='card-options'>
-        <p>a</p>
 
         <span
           className='material-symbols-outlined'
@@ -43,6 +44,7 @@ export function Card ({ id, content, star, updateNote, deleteNote }) {
           {
             dropDown && (
               <div className='more-vert-options'>
+                <button>Add tag</button>
                 <button onClick={() => deleteNote({ id })}>Delete</button>
               </div>
             )

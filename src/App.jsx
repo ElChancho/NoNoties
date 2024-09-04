@@ -21,6 +21,7 @@ export function App () {
                   id={note.id}
                   content={note.content}
                   star={note.star}
+                  tag={note.tag}
                   deleteNote={deleteNote}
                   updateNote={updateNote}
                 />
