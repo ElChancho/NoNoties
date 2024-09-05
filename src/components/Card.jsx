@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import IconMoreVert from '../img/more_vert.svg'
 import './Card.css'
-import { useTag } from '../hooks/useTag'
+import { useModal } from '../hooks/useModal'
+import { ModalTag } from './ModalTag'
 
 export function Card ({ id, content, star, tag, updateNote, deleteNote }) {
   const [dropDown, setDropDown] = useState(false)
-  const { tags, addTag } = useTag()
+  const { modal, openModal, closeModal } = useModal()
 
   const dropDownClick = () => {
     setDropDown(!dropDown)
@@ -44,7 +45,8 @@ export function Card ({ id, content, star, tag, updateNote, deleteNote }) {
           {
             dropDown && (
               <div className='more-vert-options'>
-                <button>Add tag</button>
+                <button onClick={openModal}>Add tag</button>
+                <ModalTag modal={modal} closeModal={closeModal} />
                 <button onClick={() => deleteNote({ id })}>Delete</button>
               </div>
             )

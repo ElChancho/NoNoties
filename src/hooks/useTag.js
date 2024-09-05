@@ -13,7 +13,7 @@ export function useTag () {
 
   const addTag = ({ name, color }) => {
     const auxTags = [...tags]
-    const newTag = { name, color }
+    const newTag = { id: Date.now(), name, color }
     auxTags.push(newTag)
     setTags(auxTags)
   }
