@@ -1,0 +1,9 @@
+.tag {
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  border-radius: 10px;
+  border: 1px solid black;
+  align-items: center;
+  cursor: pointer;
+}
