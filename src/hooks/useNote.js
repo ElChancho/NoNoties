@@ -18,6 +18,7 @@ export function useNote () {
     setNotes(newNotes)
   }
 
+
   const deleteNote = ({ id }) => {
     const auxNotes = [...notes]
     const deletedNotes = auxNotes.filter((note) => note.id !== id)
