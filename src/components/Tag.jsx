@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './Tag.css'
 
-export function Tag ({ id, name, color }) {
+export function Tag ({ id, name, color, onClick, isSelected }) {
   const [isHovered, setHovered] = useState(false)
 
   const handleIsHovered = () => {
@@ -17,7 +17,15 @@ export function Tag ({ id, name, color }) {
       className='tag'
       onMouseEnter={handleIsHovered}
       onMouseLeave={handleIsNotHovered}
-      style={isHovered ? { backgroundColor: 'rgb(237, 237, 237)' } : { backgroundColor: '' }}
+      onClick={onClick}
+      style={{
+        backgroundColor: isSelected
+          ? 'rgba(0, 0, 0, 0.1)' // Fondo más oscuro si está seleccionado
+          : isHovered
+            ? 'rgb(237, 237, 237)' // Fondo al pasar el mouse
+            : '',
+        border: isSelected ? `2px solid ${color}` : 'none' // Borde para destacar el tag seleccionado
+      }}
     >
       <span
         className='material-symbols-outlined'

@@ -9,6 +9,7 @@ export function useNote () {
 
   useEffect(() => {
     window.localStorage.setItem('notes', JSON.stringify(notes))
+    console.log('NOTAS: ', notes)
   }, [notes])
 
   const addNote = () => {
@@ -18,20 +19,23 @@ export function useNote () {
     setNotes(newNotes)
   }
 
-
   const deleteNote = ({ id }) => {
     const auxNotes = [...notes]
     const deletedNotes = auxNotes.filter((note) => note.id !== id)
     setNotes(deletedNotes)
   }
 
-  const updateNote = ({ id, content, star }) => {
+  const updateNote = ({ id, auxContent = undefined, star, auxTag = undefined }) => {
     let auxNotes = [...notes]
     const updatedNoteId = auxNotes.findIndex((auxNote) => auxNote.id === id)
 
     if (updatedNoteId !== -1) {
       const auxStar = auxNotes[updatedNoteId].star
-      const newNote = { ...auxNotes[updatedNoteId], content, star }
+      let content = auxNotes[updatedNoteId].content
+      if (auxContent !== undefined) content = auxContent
+      let tag = auxNotes[updatedNoteId].tag
+      if (auxTag !== undefined) tag = auxTag
+      const newNote = { ...auxNotes[updatedNoteId], content, star, tag }
       auxNotes[updatedNoteId] = newNote
 
       if (auxStar !== star) {

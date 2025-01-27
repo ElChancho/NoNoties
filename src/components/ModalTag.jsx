@@ -3,7 +3,7 @@ import { useTag } from '../hooks/useTag'
 import { Tag } from './Tag'
 import { useState } from 'react'
 
-export function ModalTag ({ modal, closeModal }) {
+export function ModalTag ({ modal, closeModal, currentTag, onSelectTag }) {
   const { tags, addTag } = useTag()
   const [color, setColor] = useState('#ffffff')
   const [name, setName] = useState('')
@@ -32,12 +32,15 @@ export function ModalTag ({ modal, closeModal }) {
             tags.length === 0
               ? <p>No tags added</p>
               : tags.map((tag) => {
+                const isSelected = currentTag && tag.id === currentTag.id
                 return (
                   <Tag
                     key={tag.id}
                     id={tag.id}
                     name={tag.name}
                     color={tag.color}
+                    onClick={() => onSelectTag(tag)}
+                    isSelected={isSelected}
                   />
                 )
               })
@@ -48,11 +51,11 @@ export function ModalTag ({ modal, closeModal }) {
           <h3>Create new tag</h3>
           <label htmlFor='name'>Name</label>
           <input type='text' id='name' name='name' maxLength='20' placeholder='Cinema, series...' onChange={handleName} required />
-          <p>Añadir color</p>
+          <p>Add color</p>
           <input type='color' value={color} onChange={handleColor} />
-          <button type='submit'> Add</button>
+          <button type='submit'>Add</button>
           {/* <button type='submit' onClick={() => addTag({ name: 'prueba', color: 'red' })}>Add</button> */}
-          <button onClick={closeModal}>Cancel</button>
+          <button onClick={closeModal}>Close</button>
         </form>
 
       </div>

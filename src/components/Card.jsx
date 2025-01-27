@@ -14,12 +14,18 @@ export function Card ({ id, content, star, tag, updateNote, deleteNote }) {
 
   const handleNoteChange = (event) => {
     const newNoteValue = event.target.value
-    updateNote({ id, content: newNoteValue, star })
+    updateNote({ id, auxContent: newNoteValue, star })
   }
 
   const handleStarChange = () => {
     const changeStar = !star
     updateNote({ id, content, star: changeStar })
+  }
+
+  const handleTagChange = (selectedTag) => {
+    if (selectedTag.id !== tag.id) {
+      updateNote({ id, auxTag: selectedTag })
+    }
   }
 
   return (
@@ -46,7 +52,12 @@ export function Card ({ id, content, star, tag, updateNote, deleteNote }) {
             dropDown && (
               <div className='more-vert-options'>
                 <button onClick={openModal}>Add tag</button>
-                <ModalTag modal={modal} closeModal={closeModal} />
+                <ModalTag
+                  modal={modal}
+                  closeModal={closeModal}
+                  currentTag={tag}
+                  onSelectTag={handleTagChange}
+                />
                 <button onClick={() => deleteNote({ id })}>Delete</button>
               </div>
             )
