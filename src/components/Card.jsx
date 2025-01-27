@@ -25,6 +25,8 @@ export function Card ({ id, content, star, tag, updateNote, deleteNote }) {
   const handleTagChange = (selectedTag) => {
     if (selectedTag.id !== tag.id) {
       updateNote({ id, auxTag: selectedTag })
+    } else if (selectedTag.id === tag.id) {
+      updateNote({ id, auxTag: {} })
     }
   }
 

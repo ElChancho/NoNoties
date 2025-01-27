@@ -13,10 +13,18 @@ export function useTag () {
 
   const addTag = ({ name, color }) => {
     const auxTags = [...tags]
-    const newTag = { id: Date.now(), name, color }
-    auxTags.push(newTag)
+    const tagExist = auxTags.find((tag) => tag.name === name && tag.color === color)
+    if (tagExist === undefined) {
+      const newTag = { id: Date.now(), name, color }
+      auxTags.push(newTag)
+      setTags(auxTags)
+    }
+  }
+
+  const deleteTag = (id) => {
+    const auxTags = [...tags].filter((tag) => tag.id !== id)
     setTags(auxTags)
   }
 
-  return { tags, addTag }
+  return { tags, addTag, deleteTag }
 }

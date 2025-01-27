@@ -1,10 +1,11 @@
 import './ModalTag.css'
+import iconClose from '../img/close.png'
 import { useTag } from '../hooks/useTag'
 import { Tag } from './Tag'
 import { useState } from 'react'
 
 export function ModalTag ({ modal, closeModal, currentTag, onSelectTag }) {
-  const { tags, addTag } = useTag()
+  const { tags, addTag, deleteTag } = useTag()
   const [color, setColor] = useState('#ffffff')
   const [name, setName] = useState('')
 
@@ -26,6 +27,7 @@ export function ModalTag ({ modal, closeModal, currentTag, onSelectTag }) {
   return (
     <div className='modal-overlay'>
       <div className='modal-card'>
+        <img src={iconClose} alt='close' onClick={closeModal} />
         <h3>Your tags</h3>
         <section className='your-tags'>
           {
@@ -41,6 +43,7 @@ export function ModalTag ({ modal, closeModal, currentTag, onSelectTag }) {
                     color={tag.color}
                     onClick={() => onSelectTag(tag)}
                     isSelected={isSelected}
+                    deleteTag={() => deleteTag(tag.id)}
                   />
                 )
               })
@@ -51,11 +54,10 @@ export function ModalTag ({ modal, closeModal, currentTag, onSelectTag }) {
           <h3>Create new tag</h3>
           <label htmlFor='name'>Name</label>
           <input type='text' id='name' name='name' maxLength='20' placeholder='Cinema, series...' onChange={handleName} required />
-          <p>Add color</p>
+          <p>Color</p>
           <input type='color' value={color} onChange={handleColor} />
           <button type='submit'>Add</button>
           {/* <button type='submit' onClick={() => addTag({ name: 'prueba', color: 'red' })}>Add</button> */}
-          <button onClick={closeModal}>Close</button>
         </form>
 
       </div>
