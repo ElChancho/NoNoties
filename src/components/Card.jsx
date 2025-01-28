@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import IconMoreVert from '../img/more_vert.svg'
 import './Card.css'
 import { useModal } from '../hooks/useModal'
@@ -7,6 +7,18 @@ import { ModalTag } from './ModalTag'
 export function Card ({ id, content, star, tag, updateNote, deleteNote }) {
   const [dropDown, setDropDown] = useState(false)
   const { modal, openModal, closeModal } = useModal()
+  const dropDownRef = useRef(null)
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const handleClickOutside = (event) => {
+    if (dropDownRef.current && !dropDownRef.current.contains(event.target)) {
+      setDropDown(false)
+    }
+  }
 
   const dropDownClick = () => {
     setDropDown(!dropDown)
@@ -22,13 +34,11 @@ export function Card ({ id, content, star, tag, updateNote, deleteNote }) {
     updateNote({ id, content, star: changeStar })
   }
 
-  const handleTagChange = (selectedTag, tags) => {
-    const tagFounded = tags.find((tag) => tag.id === selectedTag.id)
-    console.log('TAGFOUNDED: ', tagFounded)
+  const handleTagChange = (selectedTag) => {
     if (selectedTag.id !== tag.id) {
-      updateNote({ id, auxTag: selectedTag })
+      updateNote({ id, auxTag: selectedTag, star })
     } else if (selectedTag.id === tag.id) {
-      updateNote({ id, auxTag: {} })
+      updateNote({ id, auxTag: {}, star })
     }
   }
 
@@ -50,12 +60,12 @@ export function Card ({ id, content, star, tag, updateNote, deleteNote }) {
           star
         </span>
 
-        <div className='more-vert'>
+        <div className='more-vert' ref={dropDownRef}>
           <img src={IconMoreVert} alt='dropdown' onClick={dropDownClick} />
           {
             dropDown && (
               <div className='more-vert-options'>
-                <button onClick={openModal}>Add tag</button>
+                <button onClick={openModal}>Tag</button>
                 <ModalTag
                   modal={modal}
                   closeModal={closeModal}

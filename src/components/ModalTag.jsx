@@ -41,7 +41,7 @@ export function ModalTag ({ modal, closeModal, currentTag, onSelectTag }) {
                     id={tag.id}
                     name={tag.name}
                     color={tag.color}
-                    onSelectTag={() => onSelectTag(tag, tags)}
+                    onSelectTag={() => onSelectTag(tag)}
                     isSelected={isSelected}
                     deleteTag={() => { deleteTag(tag.id) }}
                   />

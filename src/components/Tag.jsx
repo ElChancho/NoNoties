@@ -43,7 +43,7 @@ export function Tag ({ id, name, color, onSelectTag, isSelected, deleteTag }) {
     })
   }
 
-  const handleDelete = (event) => {
+  const handleDelete = () => {
     deleteTag()
     onSelectTag()
   }
@@ -90,14 +90,10 @@ export function Tag ({ id, name, color, onSelectTag, isSelected, deleteTag }) {
             className='context-menu'
             style={{
               top: `${menuInfo.position.y}px`,
-              left: `${menuInfo.position.x}px`,
-              backgroundColor: 'white',
-              boxShadow: '0px 2px 8px rgba(0,0,0,0.15)',
-              padding: '8px',
-              borderRadius: '4px'
+              left: `${menuInfo.position.x}px`
             }}
           >
-            <button onClick={(event) => handleDelete(event)} style={{ cursor: 'pointer' }}>
+            <button onClick={(event) => handleDelete(event)}>
               Delete Tag
             </button>
           </div>

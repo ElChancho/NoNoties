@@ -25,7 +25,7 @@ export function useNote () {
     setNotes(deletedNotes)
   }
 
-  const updateNote = ({ id, auxContent = undefined, star, auxTag = undefined }) => {
+  const updateNote = ({ id, auxContent = undefined, star = false, auxTag = undefined }) => {
     let auxNotes = [...notes]
     const updatedNoteId = auxNotes.findIndex((auxNote) => auxNote.id === id)
 
