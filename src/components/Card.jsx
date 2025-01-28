@@ -22,7 +22,9 @@ export function Card ({ id, content, star, tag, updateNote, deleteNote }) {
     updateNote({ id, content, star: changeStar })
   }
 
-  const handleTagChange = (selectedTag) => {
+  const handleTagChange = (selectedTag, tags) => {
+    const tagFounded = tags.find((tag) => tag.id === selectedTag.id)
+    console.log('TAGFOUNDED: ', tagFounded)
     if (selectedTag.id !== tag.id) {
       updateNote({ id, auxTag: selectedTag })
     } else if (selectedTag.id === tag.id) {

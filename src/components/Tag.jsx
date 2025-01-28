@@ -1,10 +1,8 @@
 import { useEffect, useState, useRef } from 'react'
 import './Tag.css'
 
-export function Tag ({ id, name, color, onClick, isSelected, deleteTag }) {
+export function Tag ({ id, name, color, onSelectTag, isSelected, deleteTag }) {
   const [isHovered, setHovered] = useState(false)
-  // const [showMenu, setShowMenu] = useState(false)
-  // const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 })
   const [menuInfo, setMenuInfo] = useState({
     isVisible: false,
     position: { x: 0, y: 0 },
@@ -15,7 +13,6 @@ export function Tag ({ id, name, color, onClick, isSelected, deleteTag }) {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // setShowMenu(false)
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setMenuInfo({
           isVisible: false,
@@ -39,8 +36,6 @@ export function Tag ({ id, name, color, onClick, isSelected, deleteTag }) {
 
   const handleContextMenu = (event, id) => {
     event.preventDefault()
-    // setShowMenu(true)
-    // setMenuPosition({ x: event.pageX, y: event.pageY })
     setMenuInfo({
       isVisible: true,
       position: { x: event.pageX, y: event.pageY },
@@ -50,11 +45,8 @@ export function Tag ({ id, name, color, onClick, isSelected, deleteTag }) {
 
   const handleDelete = (event) => {
     deleteTag()
+    onSelectTag()
   }
-
-  // const handleCloseMenu = () => {
-  //   setShowMenu(false)
-  // }
 
   return (
     <>
@@ -62,7 +54,7 @@ export function Tag ({ id, name, color, onClick, isSelected, deleteTag }) {
         className='tag'
         onMouseEnter={handleIsHovered}
         onMouseLeave={handleIsNotHovered}
-        onClick={onClick}
+        onClick={onSelectTag}
         onContextMenu={(event) => handleContextMenu(event, id)}
         style={{
           backgroundColor: isSelected

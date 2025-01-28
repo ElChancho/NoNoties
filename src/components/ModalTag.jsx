@@ -41,14 +41,9 @@ export function ModalTag ({ modal, closeModal, currentTag, onSelectTag }) {
                     id={tag.id}
                     name={tag.name}
                     color={tag.color}
-                    onClick={() => onSelectTag(tag)}
+                    onSelectTag={() => onSelectTag(tag, tags)}
                     isSelected={isSelected}
-                    deleteTag={() => {
-                      if (isSelected) {
-                        //
-                      }
-                      deleteTag(tag.id)
-                    }}
+                    deleteTag={() => { deleteTag(tag.id) }}
                   />
                 )
               })
@@ -62,7 +57,6 @@ export function ModalTag ({ modal, closeModal, currentTag, onSelectTag }) {
           <p>Color</p>
           <input type='color' value={color} onChange={handleColor} />
           <button type='submit'>Add</button>
-          {/* <button type='submit' onClick={() => addTag({ name: 'prueba', color: 'red' })}>Add</button> */}
         </form>
 
       </div>
