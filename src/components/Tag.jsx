@@ -1,15 +1,32 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import './Tag.css'
 
 export function Tag ({ id, name, color, onClick, isSelected, deleteTag }) {
   const [isHovered, setHovered] = useState(false)
-  const [showMenu, setShowMenu] = useState(false)
+  // const [showMenu, setShowMenu] = useState(false)
+  // const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 })
+  const [menuInfo, setMenuInfo] = useState({
+    isVisible: false,
+    position: { x: 0, y: 0 },
+    tagId: null
+  })
+
+  const menuRef = useRef(null)
 
   useEffect(() => {
-    const handleClickOutside = () => setShowMenu(false)
+    const handleClickOutside = (event) => {
+      // setShowMenu(false)
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuInfo({
+          isVisible: false,
+          position: { x: 0, y: 0 },
+          tagId: null
+        })
+      }
+    }
 
-    document.addEventListener('click', handleClickOutside)
-    return () => document.removeEventListener('click', handleClickOutside)
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
   const handleIsHovered = () => {
@@ -20,74 +37,80 @@ export function Tag ({ id, name, color, onClick, isSelected, deleteTag }) {
     setHovered(false)
   }
 
-  const handleContextMenu = (event) => {
+  const handleContextMenu = (event, id) => {
     event.preventDefault()
-    setShowMenu(true)
+    // setShowMenu(true)
+    // setMenuPosition({ x: event.pageX, y: event.pageY })
+    setMenuInfo({
+      isVisible: true,
+      position: { x: event.pageX, y: event.pageY },
+      tagId: id
+    })
   }
 
-  const handleDelete = () => {
-    setShowMenu(false)
+  const handleDelete = (event) => {
     deleteTag()
   }
 
-  const handleCloseMenu = () => {
-    setShowMenu(false)
-  }
+  // const handleCloseMenu = () => {
+  //   setShowMenu(false)
+  // }
 
   return (
-    <div
-      className='tag'
-      onMouseEnter={handleIsHovered}
-      onMouseLeave={handleIsNotHovered}
-      onClick={onClick}
-      onContextMenu={handleContextMenu}
-      style={{
-        backgroundColor: isSelected
-          ? 'rgba(0, 0, 0, 0.1)'
-          : isHovered
-            ? 'rgb(237, 237, 237)'
-            : '',
-        border: isSelected ? `2px solid ${color}` : '1px solid rgba(0, 0, 0, 0.6)'
-      }}
-    >
-      <span
-        className='material-symbols-outlined'
+    <>
+      <div
+        className='tag'
+        onMouseEnter={handleIsHovered}
+        onMouseLeave={handleIsNotHovered}
+        onClick={onClick}
+        onContextMenu={(event) => handleContextMenu(event, id)}
         style={{
-          fontVariationSettings: `'FILL' ${isHovered || isSelected ? 1 : 0}, 'wght' 300, 'GRAD' 0, 'opsz' 24`,
-          color: `${color}`,
-          cursor: 'pointer',
-          transition: '0.3s ease'
+          backgroundColor: isSelected
+            ? 'rgba(0, 0, 0, 0.1)'
+            : isHovered
+              ? 'rgb(237, 237, 237)'
+              : '',
+          border: isSelected ? `2px solid ${color}` : '1px solid rgba(0, 0, 0, 0.6)'
         }}
-      > bookmark
-      </span>
-      <p
-        key={id}
-        style={{ transform: 'translateY(-10%)' }}
       >
-        {name}
-      </p>
+        <span
+          className='material-symbols-outlined'
+          style={{
+            fontVariationSettings: `'FILL' ${isHovered || isSelected ? 1 : 0}, 'wght' 300, 'GRAD' 0, 'opsz' 24`,
+            color: `${color}`,
+            cursor: 'pointer',
+            transition: '0.3s ease'
+          }}
+        > bookmark
+        </span>
+        <p
+          key={id}
+          style={{ transform: 'translateY(-10%)' }}
+        >
+          {name}
+        </p>
 
-      {showMenu &&
+      </div>
+      {menuInfo.isVisible && menuInfo.tagId === id &&
         (
           <div
+            ref={menuRef}
             className='context-menu'
             style={{
-              top: '40px',
+              top: `${menuInfo.position.y}px`,
+              left: `${menuInfo.position.x}px`,
               backgroundColor: 'white',
               boxShadow: '0px 2px 8px rgba(0,0,0,0.15)',
               padding: '8px',
-              borderRadius: '4px',
-              zIndex: 1000
+              borderRadius: '4px'
             }}
-            onMouseLeave={handleCloseMenu}
           >
-            <button onClick={handleDelete} style={{ cursor: 'pointer' }}>
+            <button onClick={(event) => handleDelete(event)} style={{ cursor: 'pointer' }}>
               Delete Tag
             </button>
           </div>
         )}
-
-    </div>
+    </>
 
   )
 }

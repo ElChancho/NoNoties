@@ -9,6 +9,7 @@ export function useTag () {
 
   useEffect(() => {
     window.localStorage.setItem('tags', JSON.stringify(tags))
+    console.log('tags: ', tags)
   }, [tags])
 
   const addTag = ({ name, color }) => {
