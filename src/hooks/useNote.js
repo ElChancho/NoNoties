@@ -7,6 +7,12 @@ export function useNote () {
     return []
   })
 
+  const [sortedNotes, setSortedNotes] = useState(notes)
+
+  useEffect(() => {
+    setSortedNotes([...notes])
+  }, [notes])
+
   useEffect(() => {
     window.localStorage.setItem('notes', JSON.stringify(notes))
     console.log('NOTAS: ', notes)
@@ -45,6 +51,17 @@ export function useNote () {
     }
   }
 
+  const updateAllNotesTagDeleted = ({ auxTag }) => {
+    const auxNotes = [...notes]
+    const updatedNotes = auxNotes.map((note) => {
+      if (note.tag.id === auxTag.id) {
+        note.tag = {}
+      }
+      return note
+    })
+    setNotes(updatedNotes)
+  }
+
   const sortFav = ({ note, index }) => {
     const auxNotes = [...notes]
     auxNotes.splice(index, 1)
@@ -65,5 +82,12 @@ export function useNote () {
     return auxNotes
   }
 
-  return { notes, addNote, deleteNote, updateNote }
+  const sortNotesTag = ({ tag }) => {
+    if (isNaN(Number(tag.id))) setSortedNotes(notes)
+    else {
+      setSortedNotes(notes.filter((note) => note.tag.id === Number(tag.id)))
+    }
+  }
+
+  return { notes, addNote, deleteNote, updateNote, updateAllNotesTagDeleted, sortedNotes, sortNotesTag }
 }

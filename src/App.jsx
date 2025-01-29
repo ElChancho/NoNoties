@@ -3,18 +3,20 @@ import { Header } from './components/Header.jsx'
 import { ToolBar } from './components/ToolBar.jsx'
 import { Card } from './components/Card.jsx'
 import { useNote } from './hooks/useNote.js'
+import { useTag } from './hooks/useTag.js'
 
 export function App () {
-  const { notes, addNote, deleteNote, updateNote } = useNote()
+  const { notes, addNote, deleteNote, updateNote, updateAllNotesTagDeleted, sortedNotes, sortNotesTag } = useNote()
+  const tagMethods = useTag()
 
   return (
     <>
       <Header />
       <main>
-        <ToolBar addNote={addNote} />
+        <ToolBar addNote={addNote} sortNotesTag={sortNotesTag} tagMethods={tagMethods} />
         <div className='section-card'>
           {
-            notes.map((note) => {
+            sortedNotes.map((note) => {
               return (
                 <Card
                   key={note.id}
@@ -24,6 +26,8 @@ export function App () {
                   tag={note.tag}
                   deleteNote={deleteNote}
                   updateNote={updateNote}
+                  updateAllNotesTagDeleted={updateAllNotesTagDeleted}
+                  tagMethods={tagMethods}
                 />
               )
             })

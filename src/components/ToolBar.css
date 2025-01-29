@@ -1,14 +1,23 @@
-:root {
-  --margin-left: 50px;
-  --margin-right: 50px;
-}
 
 .toolbar {
-  width: calc(100% - var(--margin-left) - var(--margin-right));
+  width: auto;
   height: 35px;
   display: flex;
-  justify-content: space-between;
   border: 1px solid black;
-  margin-left: var(--margin-left);
-  margin-right: var(--margin-right);
+}
+
+.toolbar select {
+  border: 0;
+  min-width: 70px;
+  width: auto;
+  max-width: 120px;
+  text-align: center;
+  background-color: rgb(237, 237, 237);
+  transition: 0.3s ease;
+  border: 1px solid black;
+}
+
+.toolbar select:hover {
+  cursor: pointer;
+  background-color: rgb(219, 219, 219);
 }

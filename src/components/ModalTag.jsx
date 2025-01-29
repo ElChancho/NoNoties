@@ -1,11 +1,11 @@
 import './ModalTag.css'
 import iconClose from '../img/close.png'
-import { useTag } from '../hooks/useTag'
+// import { useTag } from '../hooks/useTag'
 import { Tag } from './Tag'
 import { useState } from 'react'
 
-export function ModalTag ({ modal, closeModal, currentTag, onSelectTag }) {
-  const { tags, addTag, deleteTag } = useTag()
+export function ModalTag ({ modal, closeModal, currentTag, onSelectTag, updateAllNotesTagDeleted, tagMethods }) {
+  // const { tags, addTag, deleteTag } = useTag()
   const [color, setColor] = useState('#ffffff')
   const [name, setName] = useState('')
 
@@ -13,7 +13,7 @@ export function ModalTag ({ modal, closeModal, currentTag, onSelectTag }) {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    addTag({ name, color })
+    tagMethods.addTag({ name, color })
   }
 
   const handleColor = (event) => {
@@ -31,9 +31,9 @@ export function ModalTag ({ modal, closeModal, currentTag, onSelectTag }) {
         <h3>Your tags</h3>
         <section className='your-tags'>
           {
-            tags.length === 0
+            tagMethods.tags.length === 0
               ? <p>No tags added</p>
-              : tags.map((tag) => {
+              : tagMethods.tags.map((tag) => {
                 const isSelected = currentTag && tag.id === currentTag.id
                 return (
                   <Tag
@@ -43,7 +43,10 @@ export function ModalTag ({ modal, closeModal, currentTag, onSelectTag }) {
                     color={tag.color}
                     onSelectTag={() => onSelectTag(tag)}
                     isSelected={isSelected}
-                    deleteTag={() => { deleteTag(tag.id) }}
+                    deleteTag={() => {
+                      tagMethods.deleteTag(tag.id)
+                      updateAllNotesTagDeleted({ auxTag: tag })
+                    }}
                   />
                 )
               })

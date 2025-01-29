@@ -4,7 +4,7 @@ import './Card.css'
 import { useModal } from '../hooks/useModal'
 import { ModalTag } from './ModalTag'
 
-export function Card ({ id, content, star, tag, updateNote, deleteNote }) {
+export function Card ({ id, content, star, tag, updateNote, deleteNote, updateAllNotesTagDeleted, tagMethods }) {
   const [dropDown, setDropDown] = useState(false)
   const { modal, openModal, closeModal } = useModal()
   const dropDownRef = useRef(null)
@@ -71,6 +71,8 @@ export function Card ({ id, content, star, tag, updateNote, deleteNote }) {
                   closeModal={closeModal}
                   currentTag={tag}
                   onSelectTag={handleTagChange}
+                  updateAllNotesTagDeleted={updateAllNotesTagDeleted}
+                  tagMethods={tagMethods}
                 />
                 <button onClick={() => deleteNote({ id })}>Delete</button>
               </div>
