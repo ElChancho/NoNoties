@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 export function useTag () {
+  const [infoMessage, setInfoMessage] = useState({ message: '', isError: false })
   const [tags, setTags] = useState(() => {
     const savedTags = window.localStorage.getItem('tags')
     if (savedTags) return JSON.parse(savedTags)
@@ -18,13 +19,17 @@ export function useTag () {
       const newTag = { id: Date.now(), name, color }
       auxTags.push(newTag)
       setTags(auxTags)
+      setInfoMessage({ message: '¡Se ha añadido el tag exitosamente!', isError: false })
+    } else {
+      setInfoMessage({ message: '¡El tag ya se encuentra añadido!', isError: true })
     }
   }
 
   const deleteTag = (id) => {
     const auxTags = [...tags].filter((tag) => tag.id !== id)
     setTags(auxTags)
+    setInfoMessage({ message: '¡Se ha eliminado el tag', isError: false })
   }
 
-  return { tags, addTag, deleteTag }
+  return { tags, addTag, deleteTag, infoMessage }
 }

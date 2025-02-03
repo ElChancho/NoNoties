@@ -1,19 +1,20 @@
 import './ModalTag.css'
 import iconClose from '../img/close.png'
-// import { useTag } from '../hooks/useTag'
 import { Tag } from './Tag'
+import { Message } from './Message'
 import { useState } from 'react'
 
 export function ModalTag ({ modal, closeModal, currentTag, onSelectTag, updateAllNotesTagDeleted, tagMethods }) {
-  // const { tags, addTag, deleteTag } = useTag()
   const [color, setColor] = useState('#ffffff')
   const [name, setName] = useState('')
+  const [showMessage, setShowMessage] = useState(false)
 
   if (!modal) return null
 
   const handleSubmit = (event) => {
     event.preventDefault()
     tagMethods.addTag({ name, color })
+    setShowMessage(true)
   }
 
   const handleColor = (event) => {
@@ -61,6 +62,12 @@ export function ModalTag ({ modal, closeModal, currentTag, onSelectTag, updateAl
           <input type='color' value={color} onChange={handleColor} />
           <button type='submit'>Add</button>
         </form>
+
+        {
+          showMessage && (
+            <Message text={tagMethods.infoMessage.message} isError={tagMethods.infoMessage.isError} onClose={() => setShowMessage(false)} />
+          )
+        }
 
       </div>
     </div>

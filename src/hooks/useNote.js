@@ -9,12 +9,13 @@ export function useNote () {
 
   const [sortedNotes, setSortedNotes] = useState(notes)
 
-  useEffect(() => {
-    setSortedNotes([...notes])
-  }, [notes])
+  // useEffect(() => {
+  //   setSortedNotes([...notes])
+  // }, [notes])
 
   useEffect(() => {
     window.localStorage.setItem('notes', JSON.stringify(notes))
+    setSortedNotes([...notes])
     console.log('NOTAS: ', notes)
   }, [notes])
 
