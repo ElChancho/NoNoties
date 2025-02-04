@@ -8,20 +8,20 @@ export function useNote () {
   })
 
   const [sortedNotes, setSortedNotes] = useState(notes)
-
-  // useEffect(() => {
-  //   setSortedNotes([...notes])
-  // }, [notes])
+  const [selectedTag, setSelectedTag] = useState({ tag: { id: undefined } })
 
   useEffect(() => {
     window.localStorage.setItem('notes', JSON.stringify(notes))
-    setSortedNotes([...notes])
-    console.log('NOTAS: ', notes)
+    if (selectedTag) {
+      sortNotesTag({ tag: selectedTag })
+    } else {
+      setSortedNotes([...notes])
+    }
   }, [notes])
 
-  const addNote = () => {
+  const addNote = ({ tag = { id: undefined, name: undefined, color: undefined } }) => {
     const newNotes = [...notes]
-    const newNote = { id: Date.now(), content: '', star: false, tag: { name: undefined, color: undefined } }
+    const newNote = { id: Date.now(), content: '', star: false, tag: { id: tag.id, name: tag.name, color: tag.color } }
     newNotes.push(newNote)
     setNotes(newNotes)
   }
@@ -68,24 +68,15 @@ export function useNote () {
     auxNotes.splice(index, 1)
     const moveToIndex = auxNotes.findIndex((auxNote) => auxNote.star === false)
     auxNotes.splice(moveToIndex, 0, note)
-
-    // let lastIndex = auxNotes.lastIndexOf((auxNote) => auxNote.star === true)
-
-    // while (index !== lastIndex) {
-    //   setTimeout(() => {
-    //     console.log("Han pasado 3 segundos");
-    //   }, 3000)
-    //   // const auxNote = auxNotes[lastIndex]
-    //   // moveToIndex = auxNotes.findIndex((auxNote) => auxNote.star === false)
-    //   // auxNotes.splice(moveToIndex, 0, auxNote)
-    //   // lastIndex = auxNotes.lastIndexOf((auxNote) => auxNote.star === true)
-    // }
     return auxNotes
   }
 
   const sortNotesTag = ({ tag }) => {
-    if (isNaN(Number(tag.id))) setSortedNotes(notes)
-    else {
+    setSelectedTag(tag)
+
+    if (isNaN(Number(tag.id))) {
+      setSortedNotes(notes)
+    } else {
       setSortedNotes(notes.filter((note) => note.tag.id === Number(tag.id)))
     }
   }

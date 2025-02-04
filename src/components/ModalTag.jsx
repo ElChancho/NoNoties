@@ -47,6 +47,7 @@ export function ModalTag ({ modal, closeModal, currentTag, onSelectTag, updateAl
                     deleteTag={() => {
                       tagMethods.deleteTag(tag.id)
                       updateAllNotesTagDeleted({ auxTag: tag })
+                      setShowMessage(true)
                     }}
                   />
                 )

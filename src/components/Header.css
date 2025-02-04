@@ -6,5 +6,4 @@ header {
   background-color: var(--bg2-color);
   display: flex;
   justify-content: space-around;
-  /* border-bottom: 1px solid black; */
 }

@@ -6,7 +6,7 @@ import { useNote } from './hooks/useNote.js'
 import { useTag } from './hooks/useTag.js'
 
 export function App () {
-  const { notes, addNote, deleteNote, updateNote, updateAllNotesTagDeleted, sortedNotes, sortNotesTag } = useNote()
+  const { addNote, deleteNote, updateNote, updateAllNotesTagDeleted, sortedNotes, sortNotesTag } = useNote()
   const tagMethods = useTag()
 
   return (

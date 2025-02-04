@@ -19,16 +19,16 @@ export function useTag () {
       const newTag = { id: Date.now(), name, color }
       auxTags.push(newTag)
       setTags(auxTags)
-      setInfoMessage({ message: '¡Se ha añadido el tag exitosamente!', isError: false })
+      setInfoMessage({ message: 'Succesfully added!', isError: false })
     } else {
-      setInfoMessage({ message: '¡El tag ya se encuentra añadido!', isError: true })
+      setInfoMessage({ message: 'It already exists!', isError: true })
     }
   }
 
   const deleteTag = (id) => {
     const auxTags = [...tags].filter((tag) => tag.id !== id)
     setTags(auxTags)
-    setInfoMessage({ message: '¡Se ha eliminado el tag', isError: false })
+    setInfoMessage({ message: 'Tag deleted!', isError: false })
   }
 
   return { tags, addTag, deleteTag, infoMessage }
